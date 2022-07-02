@@ -187,8 +187,22 @@ void quit(int sig)
 int main(int argc, char **argv)
 {
     ros::init(argc, argv, "teleop_control");
-    double linear_vel_  = atof(argv[1]);
-    double angular_vel_ = atof(argv[2]);
+    double linear_vel_;
+    double angular_vel_;
+    if(argc == 3)
+    {
+        linear_vel_  = atof(argv[1]);
+        angular_vel_ = atof(argv[2]);
+
+        std::cout << "Setup:\n  linear_vel_ = " << linear_vel_ << " m/s \n  angular_vel_ = " << angular_vel_ << " rad/s " << std::endl;
+    }
+    else
+    {
+        ROS_INFO("Using default values: \n  linear_vel_ = 1.0 m/s\n  angular_vel_ = 0.5 rad/s");
+        linear_vel_  = 1.0;
+        angular_vel_ = 0.5;
+    }
+
 
     TeleopControl teleop_control(linear_vel_, angular_vel_);
 
